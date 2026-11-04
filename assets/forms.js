@@ -6,7 +6,7 @@ window.P3_FORMS = {
   waitlistFormId: "",   // one form for every waitlist (P3RSONA AI, Masterminds, Architect)
   applyFormId: {        // one form per live card (each redirects to its own Calendly call type)
     "amplified": "YjPEXv",
-    "r3calibrate": "",
+    "r3calibrate": "rD5N7N",
     "next-gen": "",
     "in-house": "J1qazr"
   },
