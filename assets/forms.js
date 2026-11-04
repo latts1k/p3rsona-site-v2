@@ -5,7 +5,7 @@ window.P3_FORMS = {
   unlockFormId: "jeZd61",     // one form for the "Turn the card over" wall on the four live cards
   waitlistFormId: "",   // one form for every waitlist (P3RSONA AI, Masterminds, Architect)
   applyFormId: {        // one form per live card (each redirects to its own Calendly call type)
-    "amplified": "",
+    "amplified": "YjPEXv",
     "r3calibrate": "",
     "next-gen": "",
     "in-house": "J1qazr"
