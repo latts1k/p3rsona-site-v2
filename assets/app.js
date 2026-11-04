@@ -10,9 +10,13 @@
   var qs = new URLSearchParams(location.search);
   KEYS.forEach(function (k) { if (qs.get(k)) set("sessionStorage", "p3_" + k, qs.get(k)); });
 
-  function hidden(card) {
-    var h = { card: card };
-    KEYS.forEach(function (k) { var v = get("sessionStorage", "p3_" + k); if (v) h[k] = v; });
+  var CARD_NAMES = { "amplified": "Amplified", "r3calibrate": "R3CALIBRATE", "next-gen": "Next Gen", "in-house": "In-House", "ai": "P3RSONA AI", "masterminds": "Masterminds", "architect": "Architect" };
+  // Hidden fields sent into every Tally form: card, type, utm (one line) plus the raw UTM values.
+  function hidden(card, type) {
+    var h = { card: CARD_NAMES[card] || card, type: type };
+    var parts = [];
+    KEYS.forEach(function (k) { var v = get("sessionStorage", "p3_" + k); if (v) { h[k] = v; parts.push(k.replace("utm_", "") + "=" + v); } });
+    h.utm = parts.join(" / ");
     return h;
   }
 
@@ -41,9 +45,9 @@
       e.preventDefault();
       loadTally().then(function () {
         if (window.Tally && window.Tally.openPopup) {
-          window.Tally.openPopup(id, { layout: "modal", width: 640, overlay: true, hiddenFields: hidden(card) });
+          window.Tally.openPopup(id, { layout: "modal", width: 640, overlay: true, hiddenFields: hidden(card, action === "apply" ? "Application" : "Waitlist") });
         } else {
-          var p = new URLSearchParams(hidden(card));
+          var p = new URLSearchParams(hidden(card, action === "apply" ? "Application" : "Waitlist"));
           location.href = "https://tally.so/r/" + id + "?" + p.toString();
         }
       });
@@ -74,7 +78,7 @@
     var slot = wall.querySelector(".tally-slot");
     var fallback = wall.querySelector("form");
     if (fallback) fallback.hidden = true;
-    var p = new URLSearchParams(hidden(card));
+    var p = new URLSearchParams(hidden(card, "Unlock"));
     var iframe = document.createElement("iframe");
     iframe.setAttribute("data-tally-src", "https://tally.so/embed/" + F.unlockFormId + "?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1&" + p.toString());
     iframe.setAttribute("loading", "lazy");
