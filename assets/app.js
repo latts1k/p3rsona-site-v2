@@ -1,3 +1,25 @@
+// Lay the cards on the table as each section scrolls into view.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains("anim")) return;
+  function ready(fn) { if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
+  ready(function () {
+    var items = [].slice.call(document.querySelectorAll(".place"));
+    function show(el, d) { el.style.setProperty("--d", d + "ms"); el.classList.add("in"); }
+    if (!("IntersectionObserver" in window)) { items.forEach(function (el) { show(el, 0); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      // Cards arriving together are laid one after another; anything visible at load waits for the hero.
+      var base = Math.max(0, 2200 - performance.now());
+      entries.filter(function (en) { return en.isIntersecting; })
+        .sort(function (a, b) { return items.indexOf(a.target) - items.indexOf(b.target); })
+        .forEach(function (en, k) { show(en.target, base + k * 240); io.unobserve(en.target); });
+    }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+    items.forEach(function (el) { io.observe(el); });
+    // Safety net: never leave a card hidden.
+    setTimeout(function () { items.forEach(function (el) { if (!el.classList.contains("in")) show(el, 0); }); }, 12000);
+  });
+})();
+
 (function () {
   var F = window.P3_FORMS || {};
   var KEYS = ["utm_source", "utm_medium", "utm_campaign", "ref"];

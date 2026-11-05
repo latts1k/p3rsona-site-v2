@@ -116,6 +116,11 @@ def brand(t):
     return re.sub(r"(P|R)3(R|C)", r'\1<span class="b3">3</span>\2', e(t))
 
 
+def words(t):
+    """Split a line into words so each one can rise in turn."""
+    return " ".join(f'<span class="w" style="--i:{i}">{e(w)}</span>' for i, w in enumerate(t.split()))
+
+
 def head(title, desc, depth):
     return f"""<!doctype html>
 <html lang="en-GB">
@@ -135,6 +140,7 @@ def head(title, desc, depth):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/assets/styles.css">
+<script>try{{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim')}}catch(e){{}}</script>
 </head>
 <body>
 """
@@ -154,7 +160,7 @@ FOOT = f"""<footer class="wrap foot">
 
 def item(c, i):
     cls = "more hot" if c.get("hot") else ("more soft" if c["group"] == "soon" else "more")
-    return f"""<a class="item rise d{min(i+1,4)}" href="/card/{c['slug']}">
+    return f"""<a class="item place" href="/card/{c['slug']}">
 <div class="card"><img src="/assets/cards/{c['img']}" width="240" height="336" alt="{e(c['name'])} playing card, {e(c['rank_name'].lower())}"></div>
 <div class="meta"><div class="name">{brand(c['name'])}</div><div class="one">{e(c['home_one'])}</div><div class="small {cls}">{e(c['home_more'])}</div></div>
 </a>"""
@@ -170,14 +176,14 @@ def home():
     live = [by[s] for s in HOME_ORDER["live"]]
     soon = [by[s] for s in HOME_ORDER["soon"]]
     out = head(f"P3RSONA · {ANCHOR}", "The Jack of All Trades Content Deck. Seven ways to work with Lateef, a one-of-one operator in content: pick a card.", 0)
-    out += f"""<header class="wrap bar"><a class="wordmark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><a href="{IG}" rel="noopener">@latts1k</a></header>
+    out += f"""<header class="wrap bar intro"><a class="wordmark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><a href="{IG}" rel="noopener">@latts1k</a></header>
 <main>
-<section class="hero rise">
-<svg width="16" height="22" viewBox="0 0 14 19" aria-hidden="true"><polygon points="7,0 14,9.5 7,19 0,9.5" fill="#7A1E2E"></polygon></svg>
-<p class="eyebrow">The Jack of All Trades Content Deck</p>
-<h1 class="anchor">{e(ANCHOR)}</h1>
-<p class="lede">Every card below is a way to work with me.</p>
-<ol class="steps"><li><b>I</b>Pick a card</li><li><b>II</b>Unlock the details</li><li><b>III</b>Apply, book a call or join the waitlist</li></ol>
+<section class="hero">
+<svg class="fade" style="--d:900ms" width="16" height="22" viewBox="0 0 14 19" aria-hidden="true"><polygon points="7,0 14,9.5 7,19 0,9.5" fill="#7A1E2E"></polygon></svg>
+<p class="eyebrow fade" style="--d:1100ms">The Jack of All Trades Content Deck</p>
+<h1 class="anchor">{words(ANCHOR)}</h1>
+<p class="lede fade" style="--d:2300ms">Every card below is a way to work with me.</p>
+<ol class="steps fade" style="--d:2600ms"><li><b>I</b>Pick a card</li><li><b>II</b>Unlock the details</li><li><b>III</b>Apply, book a call or join the waitlist</li></ol>
 </section>
 <section class="wrap section" aria-labelledby="inplay">
 <div class="sechead"><h2 class="label" id="inplay">In play</h2><p>Four cards on the table</p></div>
@@ -189,7 +195,7 @@ def home():
 </section>
 <section class="wrap section" aria-labelledby="club">
 <div class="sechead"><h2 class="label" id="club">Off the menu</h2><p>Handed out, never picked</p></div>
-<div class="club">
+<div class="club place">
 <div class="card"><img src="/assets/cards/club-p3rsona-invite.svg" width="240" height="336" alt="Club P3RSONA invitation card, private members club, by invitation only"></div>
 <div class="text"><h3>CLUB P<span class="b3">3</span>RSONA</h3>
 <p>A private members club for founders and creatives. You can't pick this card. If we work together and it's the right fit, it gets handed to you.</p>

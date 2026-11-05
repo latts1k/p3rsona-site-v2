@@ -132,6 +132,25 @@ h1.anchor{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(40
 .rise{animation:rise 1800ms var(--ease) both}
 .d1{animation-delay:150ms}.d2{animation-delay:300ms}.d3{animation-delay:450ms}.d4{animation-delay:600ms}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* opening: header line draws, wordmark and hero fade in, anchor rises word by word */
+.bar.intro{position:relative}
+html.anim .bar.intro{border-bottom-color:transparent}
+html.anim .bar.intro::after{content:"";position:absolute;left:max(24px,env(safe-area-inset-left));right:max(24px,env(safe-area-inset-right));bottom:-1px;height:1px;background:var(--line);transform-origin:left;animation:draw 1800ms var(--ease) 200ms both}
+html.anim .bar.intro>*{animation:fadein 1600ms var(--ease) both}
+html.anim .bar.intro>*:last-child{animation-delay:500ms}
+html.anim .fade{animation:rise 1600ms var(--ease) var(--d,0ms) both}
+html.anim .anchor .w{display:inline-block;animation:word 1400ms var(--ease) calc(1300ms + var(--i) * 110ms) both}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes word{from{opacity:0;transform:translateY(.45em)}to{opacity:1;transform:none}}
+
+/* cards laid on the table one at a time as each section comes into view */
+html.anim .place{opacity:0;transform:translate(-14px,-38px) rotate(-3.5deg)}
+html.anim .place:nth-child(even){transform:translate(14px,-38px) rotate(3deg)}
+html.anim .place.in{opacity:1;transform:none;transition:opacity 1100ms ease var(--d,0ms),transform 1700ms cubic-bezier(.22,1.12,.36,1) var(--d,0ms)}
+html.anim .place .meta,html.anim .club.place .text{opacity:0}
+html.anim .place.in .meta,html.anim .club.place.in .text{opacity:1;transition:opacity 1200ms ease calc(var(--d,0ms) + 700ms)}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.item:hover .card{transform:none}}
 
 @media (max-width:600px){
