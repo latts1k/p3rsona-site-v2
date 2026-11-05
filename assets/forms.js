@@ -7,7 +7,7 @@ window.P3_FORMS = {
   applyFormId: {        // one form per live card (each redirects to its own Calendly call type)
     "amplified": "YjPEXv",
     "r3calibrate": "rD5N7N",
-    "next-gen": "",
+    "next-gen": "VpjEPl",
     "in-house": "J1qazr"
   },
   fallbackUrl: "https://instagram.com/latts1k"
