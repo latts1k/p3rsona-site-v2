@@ -160,9 +160,15 @@ def item(c, i):
 </a>"""
 
 
+# Order the cards appear on the home page
+HOME_ORDER = dict(live=["r3calibrate", "in-house", "amplified", "next-gen"],
+                  soon=["ai", "architect", "masterminds"])
+
+
 def home():
-    live = [c for c in CARDS if c["group"] == "live"]
-    soon = [c for c in CARDS if c["group"] == "soon"]
+    by = {c["slug"]: c for c in CARDS}
+    live = [by[s] for s in HOME_ORDER["live"]]
+    soon = [by[s] for s in HOME_ORDER["soon"]]
     out = head(f"P3RSONA · {ANCHOR}", "The Jack of All Trades Content Deck. Seven ways to work with Lateef, a one-of-one operator in content: pick a card.", 0)
     out += f"""<header class="wrap bar"><a class="wordmark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><a href="{IG}" rel="noopener">@latts1k</a></header>
 <main>

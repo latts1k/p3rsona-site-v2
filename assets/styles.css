@@ -134,6 +134,16 @@ h1.anchor{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(40
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.item:hover .card{transform:none}}
 
+@media (max-width:600px){
+  .deck{gap:44px 14px}
+  .item{width:calc(50% - 7px);gap:14px}
+  .item .card{width:100%;border-radius:8px}
+  .meta{gap:6px}
+  .meta .name{font-size:14px;letter-spacing:.05em}
+  .meta .one{font-size:13px;line-height:1.45}
+  .meta .more{font-size:9.5px;letter-spacing:.12em}
+  .item:hover .more{letter-spacing:.12em}
+}
 @media (max-width:820px){
   .hero{padding-top:72px;padding-bottom:72px}
   .page{padding-top:40px}
