@@ -112,8 +112,8 @@ def e(t):
 
 
 def brand(t):
-    """Escape text and colour the 3 in P3RSONA burgundy."""
-    return re.sub(r"P3R", 'P<span class="b3">3</span>R', e(t))
+    """Escape text and colour the 3 in P3RSONA and R3CALIBRATE burgundy."""
+    return re.sub(r"(P|R)3(R|C)", r'\1<span class="b3">3</span>\2', e(t))
 
 
 def head(title, desc, depth):
@@ -164,14 +164,13 @@ def home():
     live = [c for c in CARDS if c["group"] == "live"]
     soon = [c for c in CARDS if c["group"] == "soon"]
     out = head(f"P3RSONA · {ANCHOR}", "The Jack of All Trades Content Deck. Seven ways to work with Lateef, a one-of-one operator in content: pick a card.", 0)
-    out += f"""<header class="wrap bar end"><a href="{IG}" rel="noopener">@latts1k</a></header>
+    out += f"""<header class="wrap bar"><a class="wordmark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><a href="{IG}" rel="noopener">@latts1k</a></header>
 <main>
 <section class="hero rise">
-<p class="wordmark">P<span class="b3">3</span>RSONA</p>
 <svg width="16" height="22" viewBox="0 0 14 19" aria-hidden="true"><polygon points="7,0 14,9.5 7,19 0,9.5" fill="#7A1E2E"></polygon></svg>
 <p class="eyebrow">The Jack of All Trades Content Deck</p>
 <h1 class="anchor">{e(ANCHOR)}</h1>
-<p class="lede">I'm Lateef, a one-of-one operator. I've played every position in content, from the camera to creative direction to building teams around founders. Every card below is a way to work with me.</p>
+<p class="lede">Every card below is a way to work with me.</p>
 <ol class="steps"><li><b>I</b>Pick a card</li><li><b>II</b>Unlock the details</li><li><b>III</b>Apply, book a call or join the waitlist</li></ol>
 </section>
 <section class="wrap section" aria-labelledby="inplay">
