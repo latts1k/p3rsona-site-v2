@@ -174,7 +174,7 @@ def home():
 <ol class="steps"><li><b>I</b>Pick a card</li><li><b>II</b>Unlock the details</li><li><b>III</b>Apply, book a call or join the waitlist</li></ol>
 </section>
 <section class="wrap section" aria-labelledby="inplay">
-<div class="sechead"><h2 class="label" id="inplay">In play</h2><p>Four cards, open now</p></div>
+<div class="sechead"><h2 class="label" id="inplay">In play</h2><p>Four cards on the table</p></div>
 <div class="deck">{''.join(item(c, i) for i, c in enumerate(live))}</div>
 </section>
 <section class="wrap section" aria-labelledby="soon">
