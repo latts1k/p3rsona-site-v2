@@ -7,4 +7,4 @@ The Jack of All Trades Content Deck: home page plus one page per card.
 - **Card art:** `assets/cards/*.svg` (fonts embedded).
 - **Hosting:** Vercel, no build step. Every push to `main` goes live.
 
-Before launch: confirm the P3RSONA Amplified and Next Gen prices (both show "being finalised" in the FAQ).
+Before launch: confirm the Next Gen price (shows "being finalised" in the FAQ).

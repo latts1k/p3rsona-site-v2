@@ -21,7 +21,7 @@ CARDS = [
        get=["Your positioning and personal brand strategy", "A content plan built around you", "Hands-on feedback on what you're making", "Direct access to me while we work together"],
        how=["Apply below", "We get on a call", "If it's a fit, I send your onboarding", "We start building"],
        fit="You're the face of your business, you know content is the lever, and you want to learn it properly with me before you ever hire a team.",
-       faq=[("How much does it cost?", "Pricing is being finalised. Apply and we'll talk it through on the call."),  # PRICE TBC: confirm before launch
+       faq=[("How much does it cost?", "£2,500 to start (about $3,375): £2,000 for the 90 days with me, plus a £500 P3RSONA AI setup fee. Pay in 3 is available."),
             ("Is this a course?", "No. It's 1:1, just you and me, built around your business."),
             ("Do I need a team already?", "No. This is for founders doing it themselves first. If you outgrow it, In-House and Architect are the next cards.")],
        cta_line="Let's build your persona.", cta_sub="Takes a few minutes. If it's a fit, you'll book a call with me straight after.", cta_btn="Apply for my 1:1"),
