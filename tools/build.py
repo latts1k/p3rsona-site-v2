@@ -12,9 +12,9 @@ IG = "https://instagram.com/latts1k"
 
 CARDS = [
   dict(slug="amplified", group="live", rank="A", rank_name="THE ACE", img="a-p3rsona-amplified.svg",
-       name="P3RSONA Amplified", home_one="Build your personal brand, hands-on with me.", home_more="My 1:1 · View card",
+       name="P3RSONA Amplified", home_one="Build your personal brand, hands-on with me.", home_more="3 slots left · View card", hot=True,
        one="Build your personal brand, hands-on with me.",
-       status="Live", art_label="A · MY 1:1",
+       status="Live. Three slots left for 2026", art_label="A · MY 1:1",
        for_="Founders growing their business through their personal brand, who want to work with me directly",
        next_="Apply, then a call with me",
        what="My 1:1. Private, hands-on personal brand work with me. We get clear on who you really are on camera, what makes you different and your proof, then build your content around your real persona, not a character.",
@@ -82,7 +82,7 @@ CARDS = [
             ("Can I use it alongside my 1:1?", "Yes. The two are built to work together.")],
        cta_line="Be first when it lands.", cta_sub="I'll let you know the moment it's ready.", cta_btn="Join the waitlist"),
   dict(slug="masterminds", group="soon", rank="10", rank_name="THE TEN", img="10-masterminds.svg",
-       name="Masterminds", home_one="One piece of the content roadmap, in one room. Landing 2027.", home_more="Join the waitlist",
+       name="Masterminds", home_one="One piece of the content roadmap, in one room. Maybe one day.", home_more="Held back", held=True,
        one="One piece of the content roadmap, in one room.",
        status="Landing 2027", art_label="10 · VIA NEXT GEN",
        for_="Founders and creatives who want one part of content done properly, in a room with others doing the same",
@@ -137,7 +137,7 @@ def words(t):
 
 def head(title, desc, depth):
     return f"""<!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -152,13 +152,13 @@ def head(title, desc, depth):
 <meta property="og:image:alt" content="The Joker card from the P3RSONA deck: play content.">
 <meta name="twitter:image" content="https://p3rsona.co/assets/og.png?v=joker">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#EDE7DA" id="tc">
+<meta name="theme-color" content="#121110" id="tc">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Oswald:wght@400;500&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/assets/styles.css">
-<script>try{{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim')}}catch(e){{}}try{{if(localStorage.getItem('p3_theme')==='dark'){{document.documentElement.dataset.theme='dark';document.getElementById('tc').content='#121110'}}}}catch(e){{}}</script>
+<script>try{{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim')}}catch(e){{}}try{{if(localStorage.getItem('p3_theme')==='light'){{delete document.documentElement.dataset.theme;document.getElementById('tc').content='#EDE7DA'}}}}catch(e){{}}</script>
 </head>
 <body>
 """
@@ -177,6 +177,11 @@ FOOT = f"""<footer class="wrap foot">
 
 
 def item(c, i):
+    if c.get("held"):
+        return f"""<div class="item place held" aria-label="{e(c['name'])}, held back for now">
+<div class="card"><img src="/assets/cards/{c['img']}" width="240" height="336" alt="{e(c['name'])} playing card, {e(c['rank_name'].lower())}"></div>
+<div class="meta"><div class="name">{brand(c['name'])}</div><div class="one">{e(c['home_one'])}</div><div class="small more soft">{e(c['home_more'])}</div></div>
+</div>"""
     cls = "more hot" if c.get("hot") else ("more soft" if c["group"] == "soon" else "more")
     return f"""<a class="item place" href="/card/{c['slug']}">
 <div class="card"><img src="/assets/cards/{c['img']}" width="240" height="336" alt="{e(c['name'])} playing card, {e(c['rank_name'].lower())}"></div>
@@ -208,7 +213,7 @@ def home():
 <div class="deck">{''.join(item(c, i) for i, c in enumerate(live))}</div>
 </section>
 <section class="wrap section" aria-labelledby="soon">
-<div class="sechead"><h2 class="label" id="soon">Coming soon</h2><p>Three cards, still being dealt</p></div>
+<div class="sechead"><h2 class="label" id="soon">Coming soon</h2><p>Two on the way, one held back</p></div>
 <div class="deck">{''.join(item(c, i) for i, c in enumerate(soon))}</div>
 </section>
 <section class="wrap section" aria-labelledby="club">
@@ -290,11 +295,13 @@ def main():
     with open(os.path.join(ROOT, "index.html"), "w") as f:
         f.write(home())
     for c in CARDS:
+        if c.get("held"):
+            continue  # no page while the card is held back
         d = os.path.join(ROOT, "card", c["slug"])
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "index.html"), "w") as f:
             f.write(page(c))
-    print("built", 1 + len(CARDS), "pages")
+    print("built", 1 + sum(1 for c in CARDS if not c.get("held")), "pages")
 
 
 if __name__ == "__main__":

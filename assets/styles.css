@@ -25,7 +25,7 @@ img{max-width:100%;display:block}
 /* logo: P3RSONA logo 2 */
 .wordmark,.mark{font-family:var(--logo)!important;font-weight:600!important;letter-spacing:.12em!important;text-transform:uppercase;text-decoration:none;color:var(--ink)}
 .wordmark .b3,.mark .b3{color:var(--logo3)}
-.bar a.wordmark{font-size:clamp(34px,4.8vw,54px);line-height:1;padding-left:0;color:var(--ink);min-height:44px}
+.bar a.wordmark{font-size:clamp(24px,3.2vw,36px);line-height:1;padding-left:0;color:var(--ink);min-height:44px}
 .bar a.wordmark:hover,.bar a.mark:hover,.foot a.mark:hover{color:var(--ink)}
 .bar .mark{font-size:24px;line-height:1;color:var(--ink)}
 .bar .tools{display:flex;align-items:center;gap:10px}
@@ -170,6 +170,13 @@ html.anim .place .meta,html.anim .club.place .text{opacity:0}
 html.anim .place.in .meta,html.anim .club.place.in .text{opacity:1;transition:opacity 1200ms ease calc(var(--d,0ms) + 700ms)}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.item:hover .card{transform:none}}
+
+/* held-back card: greyed out, not clickable */
+.item.held{cursor:default}
+.item.held .card{filter:grayscale(1);opacity:.42;box-shadow:none}
+.item.held:hover .card{transform:none;box-shadow:none}
+.item.held .meta{opacity:.6}
+.item.held:hover .more{letter-spacing:.18em}
 
 /* dark: a black table, cards and forms stay cream like printed stock */
 html{transition:background-color 700ms var(--ease)}
