@@ -116,6 +116,20 @@ def brand(t):
     return re.sub(r"(P|R)3(R|C)", r'\1<span class="b3">3</span>\2', e(t))
 
 
+IG_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>'
+
+
+def ig(label="@latts1k"):
+    """The Instagram link: line icon plus tracked caps."""
+    return f'<a class="ig" href="{IG}" rel="noopener" aria-label="{e(label)}">{IG_ICON}<span>{e(label)}</span></a>'
+
+
+THEME_BTN = ('<button class="theme" type="button" aria-label="Switch to dark mode" data-theme-toggle>'
+             '<svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>'
+             '<svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>'
+             '</button>')
+
+
 def words(t):
     """Split a line into words so each one can rise in turn."""
     return " ".join(f'<span class="w" style="--i:{i}">{e(w)}</span>' for i, w in enumerate(t.split()))
@@ -138,22 +152,22 @@ def head(title, desc, depth):
 <meta property="og:image:alt" content="The Joker card from the P3RSONA deck: play content.">
 <meta name="twitter:image" content="https://p3rsona.co/assets/og.png?v=joker">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#EDE7DA">
+<meta name="theme-color" content="#EDE7DA" id="tc">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Oswald:wght@400;500&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/assets/styles.css">
-<script>try{{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim')}}catch(e){{}}</script>
+<script>try{{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim')}}catch(e){{}}try{{if(localStorage.getItem('p3_theme')==='dark'){{document.documentElement.dataset.theme='dark';document.getElementById('tc').content='#121110'}}}}catch(e){{}}</script>
 </head>
 <body>
 """
 
 
 FOOT = f"""<footer class="wrap foot">
-<span class="mark">P<span class="b3">3</span>RSONA</span>
+<a class="mark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a>
 <span>{e(ANCHOR)}</span>
-<a href="{IG}" rel="noopener">@latts1k</a>
+{ig("@latts1k on Instagram")}
 </footer>
 <script src="/assets/forms.js"></script>
 <script src="/assets/app.js"></script>
@@ -171,7 +185,7 @@ def item(c, i):
 
 
 # Order the cards appear on the home page
-HOME_ORDER = dict(live=["r3calibrate", "in-house", "amplified", "next-gen"],
+HOME_ORDER = dict(live=["r3calibrate", "next-gen", "amplified", "in-house"],
                   soon=["ai", "architect", "masterminds"])
 
 
@@ -180,10 +194,10 @@ def home():
     live = [by[s] for s in HOME_ORDER["live"]]
     soon = [by[s] for s in HOME_ORDER["soon"]]
     out = head(f"P3RSONA · {ANCHOR}", "The Jack of All Trades Content Deck. Seven ways to work with Lateef, a one-of-one operator in content: pick a card.", 0)
-    out += f"""<header class="wrap bar intro"><a class="wordmark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><a href="{IG}" rel="noopener">@latts1k</a></header>
+    out += f"""<header class="wrap bar intro"><a class="wordmark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><div class="tools">{THEME_BTN}{ig()}</div></header>
 <main>
 <section class="hero">
-<svg class="fade" style="--d:900ms" width="16" height="22" viewBox="0 0 14 19" aria-hidden="true"><polygon points="7,0 14,9.5 7,19 0,9.5" fill="#7A1E2E"></polygon></svg>
+<svg class="fade diamond" style="--d:900ms" width="16" height="22" viewBox="0 0 14 19" aria-hidden="true"><polygon points="7,0 14,9.5 7,19 0,9.5" fill="currentColor"></polygon></svg>
 <p class="eyebrow fade" style="--d:1100ms">The Jack of All Trades Content Deck</p>
 <h1 class="anchor">{words(ANCHOR)}</h1>
 <p class="lede fade" style="--d:2300ms">Every card below is a way to work with me.</p>
@@ -257,7 +271,7 @@ def page(c):
     else:
         wall = f"""<section class="details">{body}</section>"""
     out = head(f"{c['name']} · P3RSONA", f"{c['one']} {c['status']}.", 2)
-    out += f"""<header class="wrap bar"><a href="/">← The deck</a><a class="mark" href="/">P<span class="b3">3</span>RSONA</a><a href="{IG}" rel="noopener">@latts1k</a></header>
+    out += f"""<header class="wrap bar"><a href="/">← The deck</a><a class="mark" href="/" aria-label="P3RSONA home">P<span class="b3">3</span>RSONA</a><div class="tools">{THEME_BTN}{ig()}</div></header>
 <main class="wrap page">
 <div class="art rise"><div class="card"><img src="/assets/cards/{c['img']}" width="340" height="476" alt="{e(c['name'])} playing card, {e(c['rank_name'].lower())}"></div><p class="small">{e(c['art_label'])}</p></div>
 <div class="content rise d1">

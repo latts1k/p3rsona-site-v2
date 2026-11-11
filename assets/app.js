@@ -1,3 +1,25 @@
+// Light / dark toggle, remembered on this device.
+(function () {
+  var root = document.documentElement;
+  function apply(dark) {
+    if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
+    var tc = document.getElementById("tc"); if (tc) tc.content = dark ? "#121110" : "#EDE7DA";
+    [].forEach.call(document.querySelectorAll("[data-theme-toggle]"), function (b) {
+      b.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+      b.setAttribute("aria-pressed", dark ? "true" : "false");
+    });
+  }
+  function init() {
+    apply(root.dataset.theme === "dark");
+    document.addEventListener("click", function (ev) {
+      var b = ev.target.closest && ev.target.closest("[data-theme-toggle]"); if (!b) return;
+      var dark = root.dataset.theme !== "dark"; apply(dark);
+      try { localStorage.setItem("p3_theme", dark ? "dark" : "light"); } catch (e) {}
+    });
+  }
+  if (document.readyState !== "loading") init(); else document.addEventListener("DOMContentLoaded", init);
+})();
+
 // Lay the cards on the table as each section scrolls into view.
 (function () {
   var root = document.documentElement;

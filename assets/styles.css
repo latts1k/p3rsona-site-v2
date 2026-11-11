@@ -1,5 +1,6 @@
 :root{
   --paper:#EDE7DA;--cream:#F3EEE3;--field:#F7F3EA;--ink:#1A1A1A;--body:#3E3832;--muted:#5E574D;--line:#CFC6B5;--accent:#7A1E2E;--on-ink:#D9D1C2;
+  --logo3:#8E1B3A;--logo:'Cormorant Garamond',Georgia,'Times New Roman',serif;--panel:#1A1A1A;--on-panel:#F3EEE3;
   --display:'Oswald','Arial Narrow',Impact,sans-serif;--sans:'Inter','Helvetica Neue',Arial,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
 }
@@ -21,9 +22,27 @@ img{max-width:100%;display:block}
 .bar.end{justify-content:flex-end}
 .bar a{text-decoration:none;font-size:13px;letter-spacing:.08em;color:var(--muted);min-height:44px;display:inline-flex;align-items:center}
 .bar a:hover{color:var(--ink)}
-.bar a.wordmark{font-size:clamp(30px,4.2vw,48px);letter-spacing:.4em;padding-left:0;color:var(--ink);min-height:44px}
-.bar a.wordmark:hover{color:var(--ink)}
-.bar .mark{font-family:var(--display);font-weight:500;font-size:16px;letter-spacing:.36em;color:var(--ink)}
+/* logo: P3RSONA logo 2 */
+.wordmark,.mark{font-family:var(--logo)!important;font-weight:600!important;letter-spacing:.12em!important;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.wordmark .b3,.mark .b3{color:var(--logo3)}
+.bar a.wordmark{font-size:clamp(34px,4.8vw,54px);line-height:1;padding-left:0;color:var(--ink);min-height:44px}
+.bar a.wordmark:hover,.bar a.mark:hover,.foot a.mark:hover{color:var(--ink)}
+.bar .mark{font-size:24px;line-height:1;color:var(--ink)}
+.bar .tools{display:flex;align-items:center;gap:10px}
+/* instagram link */
+a.ig{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-family:var(--display);font-weight:400;font-size:12px;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+a.ig svg{flex:none;opacity:.85}
+a.ig span{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;padding-bottom:3px;transition:background-size 900ms var(--ease)}
+a.ig:hover{color:var(--ink)}
+a.ig:hover span{background-size:100% 1px}
+.bar a.ig{font-size:12px;letter-spacing:.26em;color:var(--ink)}
+/* theme toggle */
+.theme{width:40px;height:40px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);cursor:pointer;transition:border-color 600ms var(--ease)}
+.theme:hover{border-color:var(--ink)}
+.theme .sun{display:none}
+[data-theme=dark] .theme .sun{display:block}
+[data-theme=dark] .theme .moon{display:none}
+.diamond{color:var(--accent)}
 
 /* hero */
 .hero{max-width:860px;margin:0 auto;padding:120px 24px 96px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:26px}
@@ -70,8 +89,7 @@ h1.anchor{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(40
 
 /* footer */
 .foot{display:flex;flex-wrap:wrap;gap:16px 48px;align-items:baseline;justify-content:space-between;padding-top:8px;padding-bottom:72px;font-size:13px;letter-spacing:.06em;color:var(--muted)}
-.foot .mark{font-family:var(--display);font-weight:500;font-size:15px;letter-spacing:.36em;color:var(--ink)}
-.foot a{font-family:var(--display);font-size:18px;letter-spacing:.08em;text-decoration:none}
+.foot .mark{font-size:22px;line-height:1;color:var(--ink)}
 
 /* card page */
 .page{padding-top:72px;padding-bottom:120px;display:flex;flex-wrap:wrap;gap:56px 80px;align-items:flex-start}
@@ -100,7 +118,7 @@ h1.anchor{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(40
 .faq summary::after{content:"+";font-family:var(--display);font-weight:400;font-size:22px;line-height:1;color:var(--accent);transition:transform 600ms var(--ease)}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq details p{margin:12px 0 0;font-size:15px}
-.cta{background:var(--ink);color:var(--cream);border-radius:16px;padding:32px;display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center;justify-content:space-between}
+.cta{background:var(--panel);color:var(--on-panel);border-radius:16px;padding:32px;display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center;justify-content:space-between}
 .cta div{display:flex;flex-direction:column;gap:8px;max-width:40ch}
 .cta .line{margin:0;font-family:var(--display);font-weight:500;font-size:22px;letter-spacing:.04em}
 .cta .sub{margin:0;font-size:15px;line-height:1.6;color:var(--on-ink)}
@@ -153,7 +171,20 @@ html.anim .place.in .meta,html.anim .club.place.in .text{opacity:1;transition:op
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.item:hover .card{transform:none}}
 
+/* dark: a black table, cards and forms stay cream like printed stock */
+html{transition:background-color 700ms var(--ease)}
+body{transition:background-color 700ms var(--ease),color 700ms var(--ease)}
+:root[data-theme=dark]{--paper:#121110;--ink:#EDE7DA;--body:#C9C0B0;--muted:#9C9385;--line:#36312B;--accent:#C9566C;--logo3:#C9566C;--panel:#F3EEE3;--on-panel:#1A1A1A;--on-ink:#3E3832;color-scheme:dark}
+[data-theme=dark] .cta .sub{color:#3E3832}
+[data-theme=dark] .cta .btn.light{background:#1A1A1A;color:#F3EEE3}
+[data-theme=dark] .cta .btn.light:hover{background:#000;color:#F3EEE3}
+[data-theme=dark] .wall{--ink:#1A1A1A;--body:#3E3832;--muted:#5E574D;--line:#CFC6B5;--accent:#7A1E2E;color:var(--ink);border-color:#2A2622}
+[data-theme=dark] .item .card,[data-theme=dark] .page .art .card,[data-theme=dark] .club .card{box-shadow:0 18px 34px -18px rgba(0,0,0,.9),0 1px 2px rgba(0,0,0,.4)}
+[data-theme=dark] .item:hover .card{box-shadow:0 40px 60px -28px rgba(0,0,0,.95),0 2px 4px rgba(0,0,0,.4)}
+
 @media (max-width:600px){
+  .bar a.ig span{display:none}
+  .bar a.ig{width:40px;justify-content:center;border:1px solid var(--line);border-radius:999px;min-height:40px}
   .deck{gap:44px 14px}
   .item{width:calc(50% - 7px);gap:14px}
   .item .card{width:100%;border-radius:8px}
